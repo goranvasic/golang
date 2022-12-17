@@ -15,6 +15,7 @@ const (
 	screenWidth, screenHeight = 640, 480
 	pylonWidth, pylonHeight   = 80, 150
 	playerWidth, playerHeight = 80, 80
+	gamepadID                 = 1
 )
 
 var (
@@ -22,7 +23,6 @@ var (
 	p1         player.Player
 	speed      float64
 	jumpHeight float64
-	id         ebiten.GamepadID
 )
 
 type Game struct {
@@ -48,7 +48,6 @@ func (g *Game) Update() error {
 	} else {
 		pylon.PosX -= speed
 	}
-	const gamepadID = 1
 	button := ebiten.GamepadButton0
 	if inpututil.IsGamepadButtonJustPressed(gamepadID, button) && p1.State == player.Idle {
 		p1.Jump()

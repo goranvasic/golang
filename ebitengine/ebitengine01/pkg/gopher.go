@@ -16,16 +16,16 @@ var (
 	sfxPlayer    *audio.Player
 	audioContext *audio.Context
 	sounds       = [][]byte{
-		sfx.Cu01_ogg,
-		sfx.Cu02_ogg,
-		sfx.Cu03_ogg,
-		sfx.Cu04_ogg,
-		sfx.Cu05_ogg,
-		sfx.Cu06_ogg,
-		sfx.Cu07_ogg,
-		sfx.Cu08_ogg,
-		sfx.Cu09_ogg,
-		sfx.Cu10_ogg}
+		sfx.Cu01Ogg,
+		sfx.Cu02Ogg,
+		sfx.Cu03Ogg,
+		sfx.Cu04Ogg,
+		sfx.Cu05Ogg,
+		sfx.Cu06Ogg,
+		sfx.Cu07Ogg,
+		sfx.Cu08Ogg,
+		sfx.Cu09Ogg,
+		sfx.Cu10Ogg}
 	sfxPlayers []*audio.Player
 )
 

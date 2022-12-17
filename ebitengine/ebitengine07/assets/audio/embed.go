@@ -6,5 +6,5 @@ import (
 
 var (
 	//go:embed blipSelect.ogg
-	BlipSelect_OGG []byte
+	BlipselectOgg []byte
 )

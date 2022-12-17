@@ -18,7 +18,7 @@ var (
 
 	sfxPlayer    *audio.Player
 	audioContext *audio.Context
-	blipSelect   = sfx.BlipSelect_OGG
+	blipSelect   = sfx.BlipselectOgg
 )
 
 type Player struct {

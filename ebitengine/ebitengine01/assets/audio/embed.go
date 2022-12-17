@@ -6,32 +6,32 @@ import (
 
 var (
 	//go:embed cu01.ogg
-	Cu01_ogg []byte
+	Cu01Ogg []byte
 
 	//go:embed cu02.ogg
-	Cu02_ogg []byte
+	Cu02Ogg []byte
 
 	//go:embed cu03.ogg
-	Cu03_ogg []byte
+	Cu03Ogg []byte
 
 	//go:embed cu04.ogg
-	Cu04_ogg []byte
+	Cu04Ogg []byte
 
 	//go:embed cu05.ogg
-	Cu05_ogg []byte
+	Cu05Ogg []byte
 
 	//go:embed cu06.ogg
-	Cu06_ogg []byte
+	Cu06Ogg []byte
 
 	//go:embed cu07.ogg
-	Cu07_ogg []byte
+	Cu07Ogg []byte
 
 	//go:embed cu08.ogg
-	Cu08_ogg []byte
+	Cu08Ogg []byte
 
 	//go:embed cu09.ogg
-	Cu09_ogg []byte
+	Cu09Ogg []byte
 
 	//go:embed cu10.ogg
-	Cu10_ogg []byte
+	Cu10Ogg []byte
 )
