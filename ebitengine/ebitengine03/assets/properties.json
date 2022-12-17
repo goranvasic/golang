@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "key": "value",
+    "collection": [
+      "item1",
+      "item2"
+    ]
+  }
+}
