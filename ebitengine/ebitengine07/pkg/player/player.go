@@ -16,9 +16,9 @@ var (
 	playerColorIdle  = color.RGBA{B: 0xff, A: 0xff}
 	playerColorError = color.RGBA{R: 0xff, G: 0xff, B: 0xff, A: 0xff}
 
-	sfxPlayer    *audio.Player
+	blipAudio    *audio.Player
 	audioContext *audio.Context
-	blipSelect   = sfx.BlipselectOgg
+	blipRaw      = sfx.BlipOgg
 )
 
 type Player struct {
@@ -35,10 +35,7 @@ func (p *Player) Draw(screen *ebiten.Image) {
 	sprite := ebiten.NewImage(int(p.Width), int(p.Height))
 	if p.State == Error {
 		sprite.Fill(playerColorError)
-		if err := sfxPlayer.Rewind(); err != nil {
-			log.Fatal(err)
-		}
-		sfxPlayer.Play()
+		playErrorSound()
 		p.State = Idle
 	} else {
 		sprite.Fill(p.Color)
@@ -48,19 +45,15 @@ func (p *Player) Draw(screen *ebiten.Image) {
 	screen.DrawImage(sprite, &options)
 }
 
+func playErrorSound() {
+	if err := blipAudio.Rewind(); err != nil {
+		log.Fatal(err)
+	}
+	blipAudio.Play()
+}
+
 func CreatePlayer(name string, gamepadId ebiten.GamepadID, screenWidth float64, screenHeight float64) Player {
-	audioContext = audio.NewContext(44100)
-	blip, err := vorbis.DecodeWithoutResampling(bytes.NewReader(blipSelect))
-	if err != nil {
-		log.Fatal(err)
-	}
-	sfxPlayer, err = audioContext.NewPlayer(blip)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err := sfxPlayer.Rewind(); err != nil {
-		log.Fatal(err)
-	}
+	enableSound()
 	return Player{
 		Name:      name,
 		GamepadId: gamepadId,
@@ -72,6 +65,21 @@ func CreatePlayer(name string, gamepadId ebiten.GamepadID, screenWidth float64, 
 		YBound:    screenHeight,
 		State:     Idle,
 		Color:     playerColorIdle,
+	}
+}
+
+func enableSound() {
+	audioContext = audio.NewContext(44100)
+	blip, err := vorbis.DecodeWithoutResampling(bytes.NewReader(blipRaw))
+	if err != nil {
+		log.Fatal(err)
+	}
+	blipAudio, err = audioContext.NewPlayer(blip)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := blipAudio.Rewind(); err != nil {
+		log.Fatal(err)
 	}
 }
 
