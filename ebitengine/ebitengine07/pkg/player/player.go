@@ -31,54 +31,6 @@ type Player struct {
 	Color          color.RGBA
 }
 
-func (p *Player) MoveUp() {
-	p.PosY -= p.Height
-	fmt.Println("Move Up")
-}
-
-func (p *Player) MoveDown() {
-	p.PosY += p.Height
-	fmt.Println("Move Down")
-}
-
-func (p *Player) MoveLeft() {
-	p.PosX -= p.Width
-	fmt.Println("Move Left")
-}
-
-func (p *Player) MoveRight() {
-	p.PosX += p.Width
-	fmt.Println("Move Right")
-}
-
-func (p *Player) Move() {
-	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-		if p.PosY-p.Height >= 0 {
-			p.MoveUp()
-		} else {
-			p.State = Error
-		}
-	} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
-		if p.PosY+p.Height <= p.YBound-p.Height {
-			p.MoveDown()
-		} else {
-			p.State = Error
-		}
-	} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
-		if p.PosX-p.Width >= 0 {
-			p.MoveLeft()
-		} else {
-			p.State = Error
-		}
-	} else if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
-		if p.PosX+p.Width <= p.XBound-p.Width {
-			p.MoveRight()
-		} else {
-			p.State = Error
-		}
-	}
-}
-
 func (p *Player) Draw(screen *ebiten.Image) {
 	sprite := ebiten.NewImage(int(p.Width), int(p.Height))
 	if p.State == Error {
@@ -121,4 +73,60 @@ func CreatePlayer(name string, gamepadId ebiten.GamepadID, screenWidth float64, 
 		State:     Idle,
 		Color:     playerColorIdle,
 	}
+}
+
+func (p *Player) Move() {
+	upKeyPressed := inpututil.IsKeyJustPressed(ebiten.KeyUp)
+	downKeyPressed := inpututil.IsKeyJustPressed(ebiten.KeyDown)
+	leftKeyPressed := inpututil.IsKeyJustPressed(ebiten.KeyLeft)
+	rightKeyPressed := inpututil.IsKeyJustPressed(ebiten.KeyRight)
+	anyKeyPressed := upKeyPressed || downKeyPressed || leftKeyPressed || rightKeyPressed
+
+	if upKeyPressed && playerCanMoveUp(p) {
+		p.MoveUp()
+	} else if downKeyPressed && playerCanMoveDown(p) {
+		p.MoveDown()
+	} else if leftKeyPressed && playerCanMoveLeft(p) {
+		p.MoveLeft()
+	} else if rightKeyPressed && playerCanMoveRight(p) {
+		p.MoveRight()
+	} else if anyKeyPressed {
+		p.State = Error
+	}
+}
+
+func playerCanMoveUp(p *Player) bool {
+	return p.PosY-p.Height >= 0
+}
+
+func playerCanMoveDown(p *Player) bool {
+	return p.PosY+p.Height <= p.YBound-p.Height
+}
+
+func playerCanMoveLeft(p *Player) bool {
+	return p.PosX-p.Width >= 0
+}
+
+func playerCanMoveRight(p *Player) bool {
+	return p.PosX+p.Width <= p.XBound-p.Width
+}
+
+func (p *Player) MoveUp() {
+	p.PosY -= p.Height
+	fmt.Println("Move Up")
+}
+
+func (p *Player) MoveDown() {
+	p.PosY += p.Height
+	fmt.Println("Move Down")
+}
+
+func (p *Player) MoveLeft() {
+	p.PosX -= p.Width
+	fmt.Println("Move Left")
+}
+
+func (p *Player) MoveRight() {
+	p.PosX += p.Width
+	fmt.Println("Move Right")
 }
